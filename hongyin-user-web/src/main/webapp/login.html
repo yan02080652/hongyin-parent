@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>请登录</title>
+    <script type="text/javascript" src="vue.min.js"></script>
+    <script type="text/javascript" src="axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: auto;
+        }
+        html {
+            width: 100%;
+            height: 100%;
+            background-image: url("images/bpicture.jpg");
+        }
+        body {
+            width: 100%;
+            height: 100%;
+        }
+        .app{
+            width: 30%;
+            height: 40%;
+            position: fixed;
+            top: 30%;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            border-radius: 5px;
+            background-color: white;
+            font-size: 5vm;
+        }
+        #title{
+            width: 80%;
+            height: 10%;
+            margin-left: 10%;
+            margin-right: 10%;
+            text-align: center;
+            padding-top: 17px;
+            border-bottom: 1px solid gray;
+        }
+        #phone{
+            width: 80%;
+            height: 15%;
+            margin-top: 5%;
+            margin-left: 10%;
+            margin-right: 10%;
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+        #phone-in{
+            width: 95%;
+            height: 75%;
+            border: 0;
+            outline: #ffffff;
+            font-size: 14px;
+            text-align: left;
+        }
+        #phoneLeft{
+            width: 25%;
+            height: 70%;
+            float: left;
+            line-height: 28px;
+            text-align: center;
+            border-right: 1px solid gray;
+            margin-top: 6px;
+        }
+        #phoneRight{
+            width: 70%;
+            height: 100%;
+            float: right;
+            line-height: 37px;
+        }
+        /**
+            验证码
+         */
+        #VerificationCode{
+            width: 80%;
+            height: 15%;
+            margin-top: 5%;
+            margin-left: 10%;
+            margin-right: 10%;
+            border: 1px solid gray;
+            border-radius: 5px;
+        }
+        #codeLeft{
+            width: 68%;
+            height: 70%;
+            float: left;
+            line-height: 28px;
+            text-align: center;
+            border-right: 1px solid gray;
+            margin-top: 6px;
+        }
+        #codeRight{
+            width: 30%;
+            height: 100%;
+            float: right;
+            line-height: 37px;
+        }
+        #code{
+            width: 80%;
+            height: 75%;
+            border: 0;
+            outline: #ffffff;
+            font-size: 14px;
+            text-align: left;
+            margin-left: 4%;
+        }
+
+        #submit{
+            width: 80%;
+            height: 15%;
+            margin-top: 8%;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+        #login{
+            width: 100%;
+            height: 100%;
+            background-color: lightcoral;
+            border: lightcoral;
+            border-radius: 5px;
+            text-align: center;
+            color: white;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!--  表头 -->
+        <div id="title">
+            手机号登录 / 注册
+        </div>
+        <!--  输入手机号 -->
+        <div id="phone">
+            <div id="phoneLeft">
+                <p>+86</p>
+            </div>
+            <div id="phoneRight">
+                <input name="phone" type="text" id="phone-in" placeholder="手机号" v-model="phone">
+            </div>
+        </div>
+        <!--  验证码 -->
+        <div id="VerificationCode">
+
+            <div id="codeLeft">
+                <input name="code" type="text" id="code" placeholder="请输入6位验证码">
+            </div>
+            <div id="codeRight">
+                <p id="sendCode" @click="test">发送验证码</p>
+            </div>
+        </div>
+        <!--  提交 -->
+        <div id="submit">
+            <input name="phone" type="button" id="login" value="确认">
+        </div>
+    </div>
+</body>
+    <script type="text/javascript">
+        var a = new Vue({
+            el:'#phone-in',
+            data:{
+                phone:''
+            },
+            methods:{
+                sendCode:function(){
+                    if (this.phone.length == 11) {
+                        axios({
+                            method:'post',
+                            url:'login',
+                            data:this.phone
+                        })
+                    } else{
+                        alert("请输入11位手机号码！")
+                    }
+                }
+            }
+        });
+        new Vue({
+            el:'#sendCode',
+            methods:{
+                test:function () {
+                    a.sendCode();
+                }
+            }
+        });
+
+    </script>
+</html>
